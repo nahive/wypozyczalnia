@@ -10,6 +10,7 @@ urlpatterns = patterns('',url(r'^$', 'Wypoz.views.home', name='home'),
                        url(r'^view_cars/', 'Wypoz.views.cars_view'), 
                        url(r'^main/', 'Wypoz.views.home'),
                        url(r'^cars_reserve/','Wypoz.views.cars_reserve'),
+                       url(r'^login/$', 'Wypoz.views.login_user'),
     # Examples:
     # url(r'^$', 'Wypozyczalnia.views.home', name='home'),
     # url(r'^Wypozyczalnia/', include('Wypozyczalnia.Wypozyczalnia.urls')),

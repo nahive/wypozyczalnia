@@ -122,7 +122,7 @@ i { font-family: quicksandlight_italic; }
 	text-align: center;
 }
 
-input[type=button]
+input[type=button], input[type=submit]
 {
 	margin-top: 120px;
 	margin-left: 370px;
@@ -135,7 +135,7 @@ input[type=button]
 	font-family: quicksandregular;
 }
 
-input[type=button]:hover
+input[type=button]:hover, input[type=submit]:hover
 {
 	background: #2AB876
 }
@@ -184,8 +184,8 @@ a {
 
 #login
 {
-	margin-top: 120px;
-	margin-left: 1075px;
+	margin-top: 200px;
+	margin-left: 675px;
 
 }
 
