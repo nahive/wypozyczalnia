@@ -21,3 +21,8 @@ def cars_view(request):
     return HttpResponse(render_to_response(
                                            'index.html',{'page':'cars_view.html'},
                                            ))
+
+def cars_reserve(request):
+    return HttpResponse(render_to_response(
+                                           'index.html',{'page':'cars_reserve.html'},
+                                           ))

@@ -34,4 +34,3 @@ class Protokol(models.Model):
     Data = models.CharField(max_length=200)
     Opis = models.CharField(max_length=200)
     Wycena = models.CharField(max_length=200)
-

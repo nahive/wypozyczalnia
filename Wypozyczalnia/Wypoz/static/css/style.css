@@ -59,7 +59,7 @@ i { font-family: quicksandlight_italic; }
 	border: 2px solid #999999;
 }
 
-#cars, #registration
+#cars, #registration, #car_summary
 {
 	border: 2px solid #dddddd;
 	width: 650px;
@@ -108,7 +108,7 @@ i { font-family: quicksandlight_italic; }
 	margin-top: 15px;
 }
 
-#details
+#details, #car_details
 {
 	border: 2px solid #dddddd;
 	width: 400px;
@@ -254,4 +254,25 @@ a {
 	margin: 0 auto;
 	margin-top: 75px;
 	overflow-y: auto;
+}
+
+#car_summary
+{
+		text-align: center;
+}
+
+#days
+{
+	margin-top: 200px;
+	margin-bottom: 200px;
+	text-align: center;
+	font-size: 20px;
+	outline: none;
+	border: 1px solid #999999;
+}
+
+#cost
+{
+	font-size: 40px;
+
 }
