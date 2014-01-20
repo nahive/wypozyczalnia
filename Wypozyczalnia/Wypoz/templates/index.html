@@ -13,13 +13,16 @@
 		<a href="../main" style="color: white"><p>Wypozyczalnia.pl</p></a>
 		</div>
 		<div id="menu">
+			{% if user.is_authenticated %}
+			<a href="../logout_me"> {{ user.username }}</a> |
+			{% else %}
 			<a href="../login">Logowanie</a> |
 			<a href="../register">Rejestracja</a> | 
-			<a href="../view_cars">Przeglądanie</a>
+			{% endif %}
+			<a href="../view_cars">Przegladanie</a>
 		</div>
 	</header>
 	<section id='main_page'>
-	{{state}}
 			<div id="main_div">
 				{% include page %}
 			</div>

@@ -1,47 +1,55 @@
 # Create your views here.
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
+from django.contrib import auth
+from django.core.context_processors import csrf
+from django.template.loader import get_template
+from django.template import Context
 
 
 def home(request):
     return HttpResponse(render_to_response(
-                                        'index.html',{'page':'main_page.html'},
-                                        ))
-def login(request):
-    return HttpResponse(render_to_response(
-                                        'index.html',{'page':'login.html'},
+                                        'index.html',{'page':'main_page.html','user':request.user},
                                         ))
 
 def register(request):
     return HttpResponse(render_to_response(
-                                         'index.html',{'page':'register.html'},
+                                         'index.html',{'page':'register.html','user':request.user},
                                          ))
 
 def cars_view(request):
     return HttpResponse(render_to_response(
-                                           'index.html',{'page':'cars_view.html'},
+                                           'index.html',{'page':'cars_view.html','user':request.user},
                                            ))
 
 def cars_reserve(request):
     return HttpResponse(render_to_response(
-                                           'index.html',{'page':'cars_reserve.html'},
+                                           'index.html',{'page':'cars_reserve.html','user':request.user},
                                            ))
 
-def login_user(request):
-    state = "Log in"
-    username = password = ' '
-    if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+def login(request):
+    c = {'page':'login.html', 'user':request.user}
+    c.update(csrf(request))
+    return HttpResponse(render_to_response('index.html',c))
 
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request,user)
-                state = "Success!"
-            else:
-                state = "Not active!"
-        else:
-            state = "Incorrect!"
-    return render_to_resonse('index.html',RequestContext(request,{'page':'cars_view.html','state':state}),
-                             )
+def auth_view(request):
+    username = request.POST.get('username','')
+    password = request.POST.get('password','')
+    user = auth.authenticate(username=username, password=password)
+    if user is not None:
+        auth.login(request, user)
+        return HttpResponseRedirect('/login_me')
+    else:
+        return HttpResponseRedirect('/invalid')
+
+def login_user(request):
+    return render_to_response('index.html',
+                              {'page':'cars_view.html','user': request.user})
+
+def logout_user(request):
+    auth.logout(request)
+    return render_to_response('index.html',{'page':'main_page.html','user':request.user})
+
+def invalid_login(request):
+    return render_to_response('index.html',{'page':'invalid.html','user':request.user})

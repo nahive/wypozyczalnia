@@ -5,12 +5,15 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',url(r'^$', 'Wypoz.views.home', name='home'),
-                       url(r'^login/','Wypoz.views.login'),
                        url(r'^register/','Wypoz.views.register'), 
                        url(r'^view_cars/', 'Wypoz.views.cars_view'), 
                        url(r'^main/', 'Wypoz.views.home'),
                        url(r'^cars_reserve/','Wypoz.views.cars_reserve'),
-                       url(r'^login/$', 'Wypoz.views.login_user'),
+                       url(r'^login/','Wypoz.views.login'),
+                       url(r'^auth/$', 'Wypoz.views.auth_view'),
+                       url(r'^login_me/$', 'Wypoz.views.login_user'),
+                       url(r'^logout_me/$', 'Wypoz.views.logout_user'),
+                       url(r'^invalid/$', 'Wypoz.views.invalid_login'),
     # Examples:
     # url(r'^$', 'Wypozyczalnia.views.home', name='home'),
     # url(r'^Wypozyczalnia/', include('Wypozyczalnia.Wypozyczalnia.urls')),
