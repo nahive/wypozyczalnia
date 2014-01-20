@@ -6,17 +6,13 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 from django.template.loader import get_template
 from django.template import Context
+from django.contrib.auth.forms import UserCreationForm
 
 
 def home(request):
     return HttpResponse(render_to_response(
                                         'index.html',{'page':'main_page.html','user':request.user},
                                         ))
-
-def register(request):
-    return HttpResponse(render_to_response(
-                                         'index.html',{'page':'register.html','user':request.user},
-                                         ))
 
 def cars_view(request):
     return HttpResponse(render_to_response(
@@ -53,3 +49,26 @@ def logout_user(request):
 
 def invalid_login(request):
     return render_to_response('index.html',{'page':'invalid.html','user':request.user})
+
+def register(request):
+    return HttpResponse(render_to_response(
+                                         'index.html',{'page':'register.html','user':request.user},
+                                         ))
+def register(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/register_success/')
+
+    args = {}
+    args.update(csrf(request))
+
+    args['form'] = UserCreationForm()
+    return render_to_response('index.html',{'page':'register.html','user': request.user},args) 
+                                                    # return render_to_response('register.html',args)
+                                                    # poprawic tutaj jeszcze, bo jest standardowy form
+                                                    # http://www.youtube.com/watch?v=xaPHSlTmg1s
+
+def register_success(request):
+    return render_to_response('index.html',{'page':'register_success.html','user':request.user})

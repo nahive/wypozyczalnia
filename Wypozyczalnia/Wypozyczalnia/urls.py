@@ -6,6 +6,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',url(r'^$', 'Wypoz.views.home', name='home'),
                        url(r'^register/','Wypoz.views.register'), 
+                       url(r'^register_success/','Wypoz.views.register_success'),
                        url(r'^view_cars/', 'Wypoz.views.cars_view'), 
                        url(r'^main/', 'Wypoz.views.home'),
                        url(r'^cars_reserve/','Wypoz.views.cars_reserve'),

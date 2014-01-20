@@ -1,27 +1,31 @@
 
-<div id="registration">
-	<form id="fields">
-	<input class="radio" type="radio" name="rodzaj" value="osoba fizyczna">Osoba fizyczna
-	<input class="radio" type="radio" name="rodzaj" value="firma">Firma
-	<input class="short" type="text" name="details" placeholder="Imie" required>
-	<input class="short" type="text" name="details" placeholder="Nazwisko"required>
-	<input class="long" type="text" name="details" placeholder="Adres" required>
-	<input class="short" type="text" name="details" placeholder="Miasto" required>
-	<input class="short" type="text" name="details" placeholder="Kod pocztowy" required>
-	<input class="long" type="text" name="details" placeholder="Pesel" required>
-	<input class="short" type="text" name="details" placeholder="Nr prawa jazdy" required>
-	<input class="short" type="text" name="details" placeholder="Nr dowodu osobistego" required>
-	</form>
-</div>
-<div id="details">
-	<div id="roa">
-		<p>Podstawowe parametry
-			<p>dupa</p>
-		</p>
-		<p>Dodatkowe parametry
-			<p>cycki</p>
-		</p>
+<form action="../register/" method="post"> 
+	{% csrf_token %}
+	<div id="registration">
+		<div id = "fields">
+		{{ form }}
+			<input class="radio" type="radio" name="rodzaj" value="osoba fizyczna">Osoba fizyczna
+			<input class="radio" type="radio" name="rodzaj" value="firma">Firma
+			<input class="short" type="text" name="details" placeholder="Imie" required>
+			<input class="short" type="text" name="details" placeholder="Nazwisko"required>
+			<input class="long" type="text" name="details" placeholder="Adres" required>
+			<input class="short" type="text" name="details" placeholder="Miasto" required>
+			<input class="short" type="text" name="details" placeholder="Kod pocztowy" required>
+			<input class="long" type="text" name="details" placeholder="Pesel" required>
+			<input class="short" type="text" name="details" placeholder="Nr prawa jazdy" required>
+			<input class="short" type="text" name="details" placeholder="Nr dowodu osobistego" required>
+		</div>
 	</div>
-	<input id="accept_roa" type="radio" value="accept">Akceptuj
-</div>
-<input id="register" type="button" value="Zarejestruj">
+	<div id="details">
+		<div id="roa">
+			<p>Podstawowe parametry
+				<p>dupa</p>
+			</p>
+			<p>Dodatkowe parametry
+				<p>cycki</p>
+			</p>
+		</div>
+		<input id="accept_roa" type="radio" value="accept">Akceptuj
+	</div>
+	<input id="register" type="submit" value="Zarejestruj">
+</form>
