@@ -5,6 +5,12 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
     <Name>Wypozyczalnia</Name>
     <RootNamespace>Wypozyczalnia</RootNamespace>
+    <CommandLineArguments />
+    <InterpreterPath />
+    <InterpreterArguments />
+    <DjangoSettingsModule>$(MSBuildProjectName).settings</DjangoSettingsModule>
+    <WebBrowserUrl />
+    <WebBrowserPort>1879</WebBrowserPort>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -29,10 +35,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="manage.py" />
-    <Compile Include="tt\models.py" />
-    <Compile Include="tt\tests.py" />
-    <Compile Include="tt\views.py" />
-    <Compile Include="tt\__init__.py" />
     <Compile Include="Wypozyczalnia\__init__.py" />
     <Compile Include="Wypozyczalnia\settings.py" />
     <Compile Include="Wypozyczalnia\urls.py" />
@@ -56,8 +58,6 @@
     </WebPiReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="tt\" />
-    <Folder Include="tt\templates\" />
     <Folder Include="Wypozyczalnia\" />
     <Folder Include="Wypoz\" />
     <Folder Include="Wypoz\static\" />
@@ -66,7 +66,6 @@
     <Folder Include="Wypoz\templates\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="tt\templates\index.html" />
     <Content Include="Wypoz\static\css\fonts\stylesheet.css" />
     <Content Include="Wypoz\static\css\fonts\ubuntu-bold-webfont.eot" />
     <Content Include="Wypoz\static\css\fonts\ubuntu-bold-webfont.svg" />
