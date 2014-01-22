@@ -6,7 +6,7 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 from django.template.loader import get_template
 from django.template import Context
-from django.contrib.auth.forms import UserCreationForm
+from Wypoz.forms import ClientRegistrationForm
 
 
 def home(request):
@@ -56,7 +56,7 @@ def register(request):
                                          ))
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = ClientRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/register_success/')
@@ -64,8 +64,8 @@ def register(request):
     args = {}
     args.update(csrf(request))
 
-    args['form'] = UserCreationForm()
-    return render_to_response('index.html',{'page':'register.html','user': request.user},args) 
+    args['form'] = ClientRegistrationForm()
+    return render_to_response('register.html',args) 
                                                     # return render_to_response('register.html',args)
                                                     # poprawic tutaj jeszcze, bo jest standardowy form
                                                     # http://www.youtube.com/watch?v=xaPHSlTmg1s
