@@ -6,17 +6,20 @@ from django.contrib import auth
 from django.core.context_processors import csrf
 from django.template.loader import get_template
 from django.template import Context
-from django.contrib.auth.forms import UserCreationForm
+from Wypoz.forms import ClientRegistrationForm
+from Wypoz.models import Auto
 
 
 def home(request):
+    all_entries = list(Auto.objects.all()[:5])
     return HttpResponse(render_to_response(
-                                        'index.html',{'page':'main_page.html','user':request.user},
+                                        'index.html',{'page':'main_page.html','user':request.user, 'car_entry':all_entries},
                                         ))
 
 def cars_view(request):
+    all_entries = list(Auto.objects.all())
     return HttpResponse(render_to_response(
-                                           'index.html',{'page':'cars_view.html','user':request.user},
+                                           'index.html',{'page':'cars_view.html','user':request.user, 'car_entry':all_entries},
                                            ))
 
 def cars_reserve(request):
@@ -51,12 +54,11 @@ def invalid_login(request):
     return render_to_response('index.html',{'page':'invalid.html','user':request.user})
 
 def register(request):
-    return HttpResponse(render_to_response(
-                                         'index.html',{'page':'register.html','user':request.user},
+    return HttpResponse(render_to_response('index.html',{'page':'register.html','user':request.user},
                                          ))
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = ClientRegistrationForm(request.POST)
         if form.is_valid():
             form.save()
             return HttpResponseRedirect('/register_success/')
@@ -64,9 +66,10 @@ def register(request):
     args = {}
     args.update(csrf(request))
 
-    args['form'] = UserCreationForm()
-    return render_to_response('index.html',{'page':'register.html','user': request.user},args) 
+    args['form'] = ClientRegistrationForm()
+    return render_to_response('index.html',{'page': 'register.html', 'user': request.user}) 
                                                     # return render_to_response('register.html',args)
+                                                    # tylko nie wiem czy jest rejestracja w naszych wybranych przypadkach ;d
                                                     # poprawic tutaj jeszcze, bo jest standardowy form
                                                     # http://www.youtube.com/watch?v=xaPHSlTmg1s
 

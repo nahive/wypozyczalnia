@@ -20,11 +20,17 @@ class Auto(models.Model):
     data_odd = models.DateField('Data oddania', blank=True, null=True)
     num_dow = models.CharField('Numer dowodu', max_length=9, blank=True, null=True, 
                                  validators=[RegexValidator(regex='^[A-Z]{3}[0-9]{6}', message='Numer postaci AAA999999')])
+    zdj_link = models.CharField('Link do zdjecia', max_length=200)
     def __unicode__(self):
         return str(self.num_rej) + ' ' + str(self.model)
 
+    def __str__(self):
+        return str(self.marka) + ' ' + str(self.model)
+
 class Pracownik(models.Model):
     id = models.AutoField(primary_key=True)
+    nick = models.CharField('Login', max_length=20)
+    haslo = models.CharField('Haslo',max_length=20)
     imie = models.CharField('Imie', max_length=20)
     naz = models.CharField('Nazwisko', max_length=30)
     miasto = models.CharField('Miasto', max_length=30)
@@ -52,6 +58,8 @@ class Protokol(models.Model):
 
 class Klient(models.Model):
     id = models.AutoField(primary_key=True)
+    nick = models.CharField('Login', max_length=20)
+    haslo = models.CharField('Haslo',max_length=20)
     imie = models.CharField('Imie', max_length=20)
     naz = models.CharField('Nazwisko', max_length=30)
     miasto = models.CharField('Miasto', max_length=30)
@@ -61,6 +69,7 @@ class Klient(models.Model):
                            validators=[RegexValidator(regex='^[0-9]', message='Max 9 cyfr')])
     num_dow = models.CharField('Numer dowodu', max_length=9, 
                                  validators=[RegexValidator(regex='^[A-Z]{3}[0-9]{6}', message='Numer postaci AAA999999')])
+    pesel = models.IntegerField('Pesel',max_length=11)
     stat = models.BooleanField(default=False)
 
     def __unicode__(self):
@@ -68,6 +77,8 @@ class Klient(models.Model):
 
 class Firma(models.Model):
     id = models.AutoField(primary_key=True)
+    nick = models.CharField('Login', max_length=20)
+    haslo = models.CharField('Haslo',max_length=20)
     naz_pel = models.CharField('Nazwa', max_length=50, help_text='Pelna nazwa firmy')
     naz_skr = models.CharField('Skrot', max_length=20, help_text='Skrocona nazwa firmy',  blank=True, null=True)
     nip = models.CharField('NIP', max_length=10, 

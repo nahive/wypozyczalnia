@@ -40,6 +40,7 @@
     <Compile Include="Wypozyczalnia\urls.py" />
     <Compile Include="Wypozyczalnia\wsgi.py" />
     <Compile Include="Wypoz\admin.py" />
+    <Compile Include="Wypoz\forms.py" />
     <Compile Include="Wypoz\models.py" />
     <Compile Include="Wypoz\tests.py" />
     <Compile Include="Wypoz\views.py" />

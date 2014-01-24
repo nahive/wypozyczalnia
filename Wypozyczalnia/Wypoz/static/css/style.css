@@ -118,8 +118,17 @@ i { font-family: quicksandlight_italic; }
 	margin-left: 75px;
 }
 
-#details p {
+#details{
 	text-align: center;
+}
+
+#details h1 {
+	font-size: 30px;
+	font-weight: bold;
+}
+
+#details p {
+	font-size: 20px;
 }
 
 input[type=button], input[type=submit]
@@ -275,4 +284,12 @@ a {
 {
 	font-size: 40px;
 
+}
+
+li {
+	cursor: pointer;
+}
+
+.selected {
+	border: 3px solid #2AA876;
 }
