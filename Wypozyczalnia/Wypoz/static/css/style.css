@@ -118,16 +118,16 @@ i { font-family: quicksandlight_italic; }
 	margin-left: 75px;
 }
 
-#details{
+#details, #roa{
 	text-align: center;
 }
 
-#details h1 {
+#details h1, #roa h1 {
 	font-size: 30px;
 	font-weight: bold;
 }
 
-#details p {
+#details p , #roa p{
 	font-size: 20px;
 }
 

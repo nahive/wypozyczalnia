@@ -1,16 +1,26 @@
-
-<div id="car_summary">
-	<input id="days" type="text" name="days" placeholder="Ilosc dni">
-	<p id="cost">Podsumowanie ceny: </p>
-	<p> {cena} </p>
-</div>
-<div id="car_details">
-	<div id="roa">
-		<h1>Podstawowe parametry</h1>
-		<p id="details_basic"></p>
-		<h1>Dodatkowe parametry</h1>
-		<p id="details_advanced"></p>
+<form action="../cars_reserve/" method="post">
+{% csrf_token %}
+	<div id="car_summary">
+		<input id="days" type="text" name="days" placeholder="Ilosc dni" data-cena="{{o.cena}}">
+		<p id="cost">Podsumowanie ceny: </p>
+		<p id="cost_final"> {{cena}} </p>
 	</div>
-	<input id="accept_car" type="radio" value="accept">Akceptuj
-</div>
-<input id="rent" type="button" value="Wypozycz">
+	<div id="car_details">
+		<div id="roa">
+			<h1>Podstawowe parametry</h1>
+			<p id="details_basic">
+				Marka: {{o.marka}} 
+				</br>model: {{o.model}} 
+				</br>klasa: {{o.klasa}}
+				</br>kolor:{{o.kolor}} </p></br>
+				<h1>Dodatkowe parametry</h1>
+			<p id="details_advanced">
+			    Wyposazenie: {{o.wypos}}
+			    </br>silnik:{{o.silnik}} 
+			    </br>liczba siedzien:{{o.licz_siedz}} 
+			</p>
+		</div>
+		<input id="accept_car" type="radio" value="accept">Akceptuj
+	</div>
+	<input id="rent" type="submit" value="Wypozycz">
+</form>

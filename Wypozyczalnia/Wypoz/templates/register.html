@@ -1,19 +1,12 @@
 
 <form action="../register/" method="post"> 
-	{% csrf_token %}
+{% csrf_token %}
 	<div id="registration">
 		<div id = "fields">
-		{{ form }}
-			<input class="radio" type="radio" name="rodzaj" value="osoba fizyczna">Osoba fizyczna
-			<input class="radio" type="radio" name="rodzaj" value="firma">Firma
-			<input class="short" type="text" name="details" placeholder="Imie" required>
-			<input class="short" type="text" name="details" placeholder="Nazwisko"required>
-			<input class="long" type="text" name="details" placeholder="Adres" required>
-			<input class="short" type="text" name="details" placeholder="Miasto" required>
-			<input class="short" type="text" name="details" placeholder="Kod pocztowy" required>
-			<input class="long" type="text" name="details" placeholder="Pesel" required>
-			<input class="short" type="text" name="details" placeholder="Nr prawa jazdy" required>
-			<input class="short" type="text" name="details" placeholder="Nr dowodu osobistego" required>
+			<input id="person" class="radio" type="radio" name="fizyczna" value="osoba fizyczna">Osoba fizyczna
+			<input id="company" class="radio" type="radio" name="firma" value="firma">Firma
+			<div id="fields_s">
+				</div>
 		</div>
 	</div>
 	<div id="details">

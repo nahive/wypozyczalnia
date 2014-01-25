@@ -15,6 +15,8 @@ urlpatterns = patterns('',url(r'^$', 'Wypoz.views.home', name='home'),
                        url(r'^login_me/$', 'Wypoz.views.login_user'),
                        url(r'^logout_me/$', 'Wypoz.views.logout_user'),
                        url(r'^invalid/$', 'Wypoz.views.invalid_login'),
+                       url(r'^cars_reserve_success/', 'Wypoz.views.cars_reserve_success'),
+                       url(r'^cars_reserve_fail/','Wypoz.views.cars_reserve_fail'),
     # Examples:
     # url(r'^$', 'Wypozyczalnia.views.home', name='home'),
     # url(r'^Wypozyczalnia/', include('Wypozyczalnia.Wypozyczalnia.urls')),
