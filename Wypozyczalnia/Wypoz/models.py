@@ -22,13 +22,13 @@ class Auto(models.Model):
                                  validators=[RegexValidator(regex='^[A-Z]{3}[0-9]{6}', message='Numer postaci AAA999999')])
     zdj_link = models.CharField('Link do zdjecia', max_length=200)
     def __unicode__(self):
-        return str(self.num_rej) + ' ' + str(self.model)
+        return str(self.num_rej) + ' ' + str(self.marka) + ' ' + str(self.model)
 
     def __str__(self):
         return str(self.marka) + ' ' + str(self.model)
 
 class Pracownik(models.Model):
-    id = models.AutoField(primary_key=True)
+    login = models.AutoField('Login', primary_key=True, max_length=20)
     nick = models.CharField('Login', max_length=20)
     haslo = models.CharField('Haslo',max_length=20)
     imie = models.CharField('Imie', max_length=20)
@@ -39,26 +39,27 @@ class Pracownik(models.Model):
     num_dow = models.CharField('Numer dowodu', max_length=9, 
                                  validators=[RegexValidator(regex='^[A-Z]{3}[0-9]{6}', message='Numer postaci AAA999999')])
 
+
+    def __unicode__(self):
+        return str(self.login) + ' ' + str(self.num_dow) + ' ' + str(self.imie) + ' ' + str(self.naz)
+
     def odbierz():
         return 1
 
 class Protokol(models.Model):
     id = models.AutoField(primary_key=True)
-    id_sam = models.ForeignKey('Wypoz.Auto')
-    num_dow = models.ForeignKey('Wypoz.Klient')
-    #num_dow = models.ForeignKey(ContentType)
-    #object_id = models.PositiveIntegerField()
-    #content_object = generic.GenericForeignKey('num_dow', 'object_id')
-    #num_dow = models.CharField('Numer Dowodu', max_length=9, 
-                                 #validators=[RegexValidator(regex='^[A-Z]{3}[0-9]{6}', message='Numer postaci AAA999999')])
+    samochod = models.ForeignKey('Wypoz.Auto')
+    klient = models.ForeignKey('Wypoz.Klient', blank=True, null=True)
+    firma = models.ForeignKey('Wypoz.Firma', blank=True, null=True)
     data = models.DateField('Data')
     opis = models.TextField('Opis')
     wycena = models.DecimalField('Wycena', max_digits=10, decimal_places=2)
     
+    def __unicode__(self):
+        return str(self.id) + ' ' + str(self.samochod) + ' ' + str(self.klient) + ' ' + str(self.firma)
 
 class Klient(models.Model):
-    id = models.AutoField(primary_key=True)
-    nick = models.CharField('Login', max_length=20)
+    login = models.CharField('Login', primary_key=True, max_length=20)
     haslo = models.CharField('Haslo',max_length=20)
     imie = models.CharField('Imie', max_length=20)
     naz = models.CharField('Nazwisko', max_length=30)
@@ -73,11 +74,10 @@ class Klient(models.Model):
     stat = models.BooleanField(default=False)
 
     def __unicode__(self):
-        return str(self.id) + ' ' + str(self.num_dow)
+        return str(self.login) + ' ' + str(self.num_dow) + ' ' + str(self.imie) + ' ' + str(self.naz)
 
 class Firma(models.Model):
-    id = models.AutoField(primary_key=True)
-    nick = models.CharField('Login', max_length=20)
+    login = models.CharField('Login', primary_key=True, max_length=20)
     haslo = models.CharField('Haslo',max_length=20)
     naz_pel = models.CharField('Nazwa', max_length=50, help_text='Pelna nazwa firmy')
     naz_skr = models.CharField('Skrot', max_length=20, help_text='Skrocona nazwa firmy',  blank=True, null=True)
@@ -92,4 +92,4 @@ class Firma(models.Model):
     naz_p = models.CharField('Nazwisko', max_length=30, help_text='Nazwisko przedstawiciela firmy')
 
     def __unicode__(self):
-        return str(self.naz_pel) + ' ' + str(self.reg)
+        return str(self.login) + ' ' + str(self.reg) + ' ' + str(self.naz_pel)
