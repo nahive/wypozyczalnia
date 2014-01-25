@@ -2,7 +2,7 @@ from django.db import models
 from django.core.validators import RegexValidator
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
-
+from datetime import timedelta
 
 # Create your models here.
 class Auto(models.Model):
@@ -20,6 +20,7 @@ class Auto(models.Model):
     data_odd = models.DateField('Data oddania', blank=True, null=True)
     num_dow = models.CharField('Numer dowodu', max_length=9, blank=True, null=True, 
                                  validators=[RegexValidator(regex='^[A-Z]{3}[0-9]{6}', message='Numer postaci AAA999999')])
+    do_odd = models.BooleanField('Do oddania', default=False)
     zdj_link = models.CharField('Link do zdjecia', max_length=200)
     def __unicode__(self):
         return str(self.num_rej) + ' ' + str(self.marka) + ' ' + str(self.model)
@@ -71,7 +72,7 @@ class Klient(models.Model):
     num_dow = models.CharField('Numer dowodu', max_length=9, 
                                  validators=[RegexValidator(regex='^[A-Z]{3}[0-9]{6}', message='Numer postaci AAA999999')])
     pesel = models.IntegerField('Pesel',max_length=11)
-    stat = models.BooleanField(default=False)
+    stat = models.BooleanField('Staly klient', default=False)
 
     def __unicode__(self):
         return str(self.login) + ' ' + str(self.num_dow) + ' ' + str(self.imie) + ' ' + str(self.naz)
