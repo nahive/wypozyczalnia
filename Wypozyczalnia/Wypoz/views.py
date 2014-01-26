@@ -26,7 +26,7 @@ def cars_view(request):
         request.session['sel_car'] = request.POST.get('id_car','brak');
         return HttpResponseRedirect('/cars_reserve')
 
-    all_entries = list(Auto.objects.filter(num_dow = ''))
+    all_entries = list(Auto.objects.filter(num_dow = None))
     c = {'page':'cars_view.html','user':request.user, 'car_entry':all_entries}
     c.update(csrf(request))
     return HttpResponse(render_to_response('index.html',c))
@@ -40,18 +40,19 @@ def cars_reserve(request):  #sprawdzac czy juz nie wypozyczylismy samochodu
         sel_car.data_wyp = datetime.now()
         sel_car.data_odd = datetime.now() + timedelta(days=int(dayss))
         try:
-            cur_user = Klient.objects.get(nick=req_user)
+            cur_user = Klient.objects.get(login=req_user)
             num_dowodu = cur_user.num_dow
             sel_car.num_dow = num_dowodu
         except ObjectDoesNotExist:
-            print "nie ma"
+            print "nie ma klienta"
         try:
-            cur_user = Firma.objects.get(nick=req_user)
+            cur_user = Firma.objects.get(login=req_user)
             num_dowodu = cur_user.num_dow_p
             sel_car.num_dow = num_dowodu
         except ObjectDoesNotExist:
-            print "nie ma"
-        if Auto.objects.filter(num_dow=num_dowodu).count != 0:
+            print "nie ma firmy"
+        if Auto.objects.filter(num_dow=num_dowodu).count() > 0:
+            print Auto.objects.filter(num_dow=num_dowodu).count()
             return HttpResponseRedirect('/cars_reserve_fail')
         sel_car.save()
         return HttpResponseRedirect('/cars_reserve_success')
@@ -73,6 +74,40 @@ def cars_reserve_fail(request):
        return HttpResponse(render_to_response(
                                             'index.html',{'page':'cars_reserve_fail.html','user':request.user},
                                            ))
+
+def cars_give_back(request):
+    req_user = request.user.username
+    try:
+        cur_user = Klient.objects.get(login=req_user)
+        num_dowodu = cur_user.num_dow
+    except ObjectDoesNotExist:
+        print "nie ma w kl"
+    try:
+        cur_user = Firma.objects.get(login=req_user)
+        num_dowodu = cur_user.num_dow_p
+    except ObjectDoesNotExist:
+        print "nie ma w fir"
+    if Auto.objects.filter(num_dow=num_dowodu).count > 0:
+        try: 
+            car = Auto.objects.get(num_dow=num_dowodu)
+            car.num_dow = None
+            car.data_odd = None
+            car.data_wyp = None
+            car.do_odd = "True"
+            car.save()
+        except ObjectDoesNotExist:
+            return HttpResponseRedirect('/cars_give_fail')
+        return HttpResponseRedirect('/cars_give_success')
+    return HttpResponseRedirect('/cars_give_fail')
+
+def cars_give_success(request):
+       return HttpResponse(render_to_response(
+                                            'index.html',{'page':'cars_give_success.html','user':request.user},
+                                           ))
+def cars_give_fail(request):
+    return HttpResponse(render_to_response(
+                                    'index.html',{'page':'cars_give_fail.html','user':request.user},
+                                   ))
 
 def login(request):
     c = {'page':'login.html', 'user':request.user}
@@ -117,7 +152,7 @@ def register(request):
             haslop = request.POST.get('haslo','')
             mailp = request.POST.get('email','')
            
-            klient = Klient(nick = loginp, haslo = haslop, imie = imiep, naz = nazwiskop, miasto = miastop, ulica = ulicap, tel = telefonp, num_dow = nr_dowodu_osobistegop, pesel = peselp, email = mailp)
+            klient = Klient(login = loginp, haslo = haslop, imie = imiep, naz = nazwiskop, miasto = miastop, ulica = ulicap, tel = telefonp, num_dow = nr_dowodu_osobistegop, pesel = peselp, email = mailp)
             klient.save()
             user = User(username = loginp)
             user.set_password(haslop)
@@ -137,7 +172,7 @@ def register(request):
             rodzajdz = request.POST.get('rodzaj','')
             nipp = request.POST.get('nip','')
             regonp = request.POST.get('regon','')
-            firma = Firma(nick = loginp, haslo = haslop,naz_pel = nazwadl, naz_skr = nazwakr, nip = nipp, reg = regonp, rodz_dzial = rodzajdz, num_dow_p = nr_dowodu_osobistegop, imie_p = imiep, naz_p = nazwiskop)
+            firma = Firma(login = loginp, haslo = haslop,naz_pel = nazwadl, naz_skr = nazwakr, nip = nipp, reg = regonp, rodz_dzial = rodzajdz, num_dow_p = nr_dowodu_osobistegop, imie_p = imiep, naz_p = nazwiskop)
             firma.save()
             user = User(username = loginp, password = haslop)
             user.set_password(haslop)

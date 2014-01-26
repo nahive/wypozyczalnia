@@ -17,6 +17,10 @@ urlpatterns = patterns('',url(r'^$', 'Wypoz.views.home', name='home'),
                        url(r'^invalid/$', 'Wypoz.views.invalid_login'),
                        url(r'^cars_reserve_success/', 'Wypoz.views.cars_reserve_success'),
                        url(r'^cars_reserve_fail/','Wypoz.views.cars_reserve_fail'),
+                       url(r'^give_back/','Wypoz.views.cars_give_back'),
+                       url(r'^cars_give_success/', 'Wypoz.views.cars_give_success'),
+                       url(r'^cars_give_fail/','Wypoz.views.cars_give_fail'),
+
     # Examples:
     # url(r'^$', 'Wypozyczalnia.views.home', name='home'),
     # url(r'^Wypozyczalnia/', include('Wypozyczalnia.Wypozyczalnia.urls')),
