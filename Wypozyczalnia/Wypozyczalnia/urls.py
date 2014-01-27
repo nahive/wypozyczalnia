@@ -20,6 +20,9 @@ urlpatterns = patterns('',url(r'^$', 'Wypoz.views.home', name='home'),
                        url(r'^give_back/','Wypoz.views.cars_give_back'),
                        url(r'^cars_give_success/', 'Wypoz.views.cars_give_success'),
                        url(r'^cars_give_fail/','Wypoz.views.cars_give_fail'),
+                       url(r'^cars_take_success/', 'Wypoz.views.cars_take_success'),
+                       url(r'^cars_take_protocol/', 'Wypoz.views.cars_take_protocol'),
+                       url(r'^cars_take_view/', 'Wypoz.views.cars_take_view'),
 
     # Examples:
     # url(r'^$', 'Wypozyczalnia.views.home', name='home'),

@@ -1,0 +1,22 @@
+<form action="../cars_take_view/" method="post">
+{% csrf_token %}
+	<div id="cars">
+		<ul id="cars_list">
+				{% for o in car_entry %}
+				<li class="car" data-id="{{o.id}}" data-marka="{{o.marka}}"  data-model="{{o.model}}"  data-klasa="{{o.klasa}}"  data-wypos="{{o.wypos}}"  data-silnik="{{o.silnik}}"  data-kolor="{{o.kolor}}"  data-licz_siedz="{{o.licz_siedz}}" data-cena="{{o.cena}}">
+						<img class="car_img" src={{o.zdj_link}} />
+						<p class="car_name">{{o.marka}} {{o.model}}</p>
+						<p class="car_params">Silnik: {{o.silnik}}, Wyposazenie: {{o.wypos}}, Kolor: {{o.kolor}}</p>
+					</li>
+				{% endfor %}
+			</ul>
+	</div>
+	<div id="details">
+		<h1>Podstawowe parametry</h1>
+		<p id="details_basic"></p>
+		<h1>Dodatkowe parametry</h1>
+		<p id="details_advanced"></p>
+	</div>
+	<input id="id_car_id" type="hidden" name="id_car" value="">
+	<input id="reserve" type="submit" value="Odbierz">
+</form>

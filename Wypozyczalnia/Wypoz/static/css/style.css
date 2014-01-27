@@ -59,7 +59,7 @@ i { font-family: quicksandlight_italic; }
 	border: 2px solid #999999;
 }
 
-#cars, #registration, #car_summary
+#cars, #registration, #car_summary, #taking_back
 {
 	border: 2px solid #dddddd;
 	width: 650px;
@@ -198,7 +198,7 @@ a {
 
 }
 
-#registration #fields
+#registration #fields, #taking_back #fields
 {
 	height: 300px;
 	width: 500px;
@@ -206,7 +206,7 @@ a {
 	margin-top: 115px;
 }
 
-#registration input
+#registration input, #taking_back input, #taking_back textarea
 {
 	margin-top: 20px;
 	margin-right: 20px;

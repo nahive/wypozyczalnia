@@ -10,10 +10,14 @@ from Wypoz.forms import ClientRegistrationForm
 from Wypoz.models import Auto
 from Wypoz.models import Klient
 from Wypoz.models import Firma
+from Wypoz.models import Pracownik
+from Wypoz.models import Protokol
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 from datetime import timedelta
+from datetime import date
+from django.db.models import Q
 
 def home(request):
     all_entries = list(Auto.objects.all()[:5])
@@ -26,7 +30,7 @@ def cars_view(request):
         request.session['sel_car'] = request.POST.get('id_car','brak');
         return HttpResponseRedirect('/cars_reserve')
 
-    all_entries = list(Auto.objects.filter(num_dow = None))
+    all_entries = list(Auto.objects.filter(Q(num_dow = None) | Q(num_dow="")))
     c = {'page':'cars_view.html','user':request.user, 'car_entry':all_entries}
     c.update(csrf(request))
     return HttpResponse(render_to_response('index.html',c))
@@ -87,12 +91,14 @@ def cars_give_back(request):
         num_dowodu = cur_user.num_dow_p
     except ObjectDoesNotExist:
         print "nie ma w fir"
+    try:
+        cur_user = Pracownik.objects.get(login=req_user)
+        return HttpResponseRedirect('/cars_take_view')
+    except ObjectDoesNotExist:
+        print "nie ma w prac"
     if Auto.objects.filter(num_dow=num_dowodu).count > 0:
         try: 
             car = Auto.objects.get(num_dow=num_dowodu)
-            car.num_dow = None
-            car.data_odd = None
-            car.data_wyp = None
             car.do_odd = "True"
             car.save()
         except ObjectDoesNotExist:
@@ -108,6 +114,63 @@ def cars_give_fail(request):
     return HttpResponse(render_to_response(
                                     'index.html',{'page':'cars_give_fail.html','user':request.user},
                                    ))
+def cars_take_view(request):
+    if request.method == 'POST':
+        request.session['take_car'] = request.POST.get('id_car','brak');
+        return HttpResponseRedirect('/cars_take_protocol')
+
+    all_entries = list(Auto.objects.filter(do_odd = True))
+    c = {'page':'cars_take_view.html','user':request.user, 'car_entry':all_entries}
+    c.update(csrf(request))
+    return HttpResponse(render_to_response('index.html',c))
+
+def cars_take_protocol(request):  #sprawdzac czy juz nie wypozyczylismy samochodu
+    if request.method== 'POST':
+            samochodp = request.session['take_car']
+            try:
+                samochodq = Auto.objects.get(id=samochodp)
+                samochod_cena = samochodq.cena
+                samochod_dni = datetime.now().date() - samochodq.data_wyp
+                samochod_wycena = int(samochod_cena) * int(samochod_dni.days) 
+                samochodq.data_odd = None
+                samochodq.data_wyp = None
+                samochodq.num_dow = None
+                samochodq.do_odd = False
+                samochodq.save()
+            except ObjectDoesNotExist:
+                print "to nie auto"
+            numdow = request.POST.get('client','')
+            datep = datetime.now()
+            opisp = request.POST.get('desc','')
+            cena_dodat = request.POST.get('price','')
+            samochod_final_cena = int(cena_dodat) + int(samochod_wycena)
+            try:
+                cli = Klient.objects.get(num_dow=numdow)
+                loginp = cli.login
+                protocol = Protokol(samochod = samochodq, klient = cli,data=datep,opis=opisp,wycena=samochod_final_cena)
+            except ObjectDoesNotExist:
+                print "to nie klient"
+            try:
+                cli = Firma.objects.get(num_dow_p=numdow)
+                loginp = cli.login
+                protocol = Protokol(samochod = samochodp, firma=cli,data=datep,opis=opisp,wycena=samochod_final_cena)
+            except ObjectDoesNotExist:
+                print "to nie firma"
+            protocol.save()
+            return HttpResponseRedirect('/cars_take_success')
+
+    take_car = request.session['take_car']
+    taken_car = Auto.objects.get(id=take_car)
+    c = {'page':'cars_take_protocol.html','user':request.user, 'o':taken_car, 'dow':taken_car.num_dow, 'data_odd':taken_car.data_odd}
+    c.update(csrf(request))
+    return HttpResponse(render_to_response('index.html',c))
+
+def cars_take_success(request):
+    sel_id = request.session['take_car']
+    sel_car = Auto.objects.get(id=sel_id)
+    return HttpResponse(render_to_response(
+                                            'index.html',{'page':'cars_take_success.html','user':request.user, 'o':sel_car},
+                                            ))
 
 def login(request):
     c = {'page':'login.html', 'user':request.user}
@@ -125,8 +188,8 @@ def auth_view(request):
         return HttpResponseRedirect('/invalid')
 
 def login_user(request):
-    return render_to_response('index.html',
-                              {'page':'cars_view.html','user': request.user})
+    return HttpResponse(render_to_response('index.html',
+                              {'page':'main_page.html','user': request.user}))
 
 def logout_user(request):
     auth.logout(request)

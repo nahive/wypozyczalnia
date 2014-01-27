@@ -29,8 +29,7 @@ class Auto(models.Model):
         return str(self.marka) + ' ' + str(self.model)
 
 class Pracownik(models.Model):
-    login = models.AutoField('Login', primary_key=True, max_length=20)
-    nick = models.CharField('Login', max_length=20)
+    login = models.CharField('Login', primary_key=True, max_length=20)
     haslo = models.CharField('Haslo',max_length=20)
     imie = models.CharField('Imie', max_length=20)
     naz = models.CharField('Nazwisko', max_length=30)

@@ -1,0 +1,15 @@
+
+<form action="../cars_take_protocol/" method="post"> 
+{% csrf_token %}
+	<div id="taking_back">
+		<div id = "fields">
+			<input style="width: 465px" id="car_id" type="text" name ="car" placeholder="Auto" value='{{o}}' >
+			<input id="client" type="text" name = "client"  placeholder="Brak" value='{{dow}}' >
+			<input id="date" type="text" name = "date"  placeholder="Data oddania" value='{{data_odd}}' required>
+			<textarea style="width: 465px" rows="3" wrap="soft" id="desc" type="textarea" name = "desc"  placeholder="Opis" value='' required></textarea>
+			<input id="price" type="text" name="price" placeholder="Dodatkowe koszta" value='' required>
+
+		</div>
+	</div>
+	<input style="margin-top:600px"id="register" type="submit" value="Odbierz!">
+</form>

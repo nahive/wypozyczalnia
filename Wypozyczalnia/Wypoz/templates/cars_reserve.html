@@ -1,7 +1,7 @@
 <form action="../cars_reserve/" method="post">
 {% csrf_token %}
 	<div id="car_summary">
-		<input id="days" type="text" name="days" placeholder="Ilosc dni" data-cena="{{o.cena}}">
+		<input id="days" type="text" name="days" placeholder="Ilosc dni" data-cena="{{o.cena}}" required>
 		<p id="cost">Podsumowanie ceny: </p>
 		<p id="cost_final"> {{cena}} </p>
 	</div>
@@ -20,7 +20,7 @@
 			    </br>liczba siedzien:{{o.licz_siedz}} 
 			</p>
 		</div>
-		<input id="accept_car" type="radio" value="accept">Akceptuj
+		<input id="accept_car" type="radio" value="accept" required>Akceptuj
 	</div>
 	<input id="rent" type="submit" value="Wypozycz">
 </form>
