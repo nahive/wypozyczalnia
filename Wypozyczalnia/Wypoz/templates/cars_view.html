@@ -18,5 +18,7 @@
 		<p id="details_advanced"></p>
 	</div>
 	<input id="id_car_id" type="hidden" name="id_car" value="">
+    {% if user.is_authenticated %}
 	<input id="reserve" type="submit" value="Zarezerwuj">
+    {% endif %}
 </form>
