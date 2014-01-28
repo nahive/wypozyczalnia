@@ -43,7 +43,7 @@ class Pracownik(models.Model):
     def __unicode__(self):
         return str(self.login) + ' ' + str(self.num_dow) + ' ' + str(self.imie) + ' ' + str(self.naz)
 
-    def odbierz():
+    def odbierz(self):
         return 1
 
 class Protokol(models.Model):

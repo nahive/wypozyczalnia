@@ -102,8 +102,21 @@
     <Content Include="Wypoz\static\css\fonts\ubuntu-regular-webfont.woff" />
     <Content Include="Wypoz\static\css\reset.css" />
     <Content Include="Wypoz\static\css\style.css" />
+    <Content Include="Wypoz\templates\cars_give_fail.html" />
+    <Content Include="Wypoz\templates\cars_give_success.html" />
+    <Content Include="Wypoz\templates\cars_reserve.html" />
+    <Content Include="Wypoz\templates\cars_reserve_fail.html" />
+    <Content Include="Wypoz\templates\cars_reserve_success.html" />
+    <Content Include="Wypoz\templates\cars_take_protocol.html" />
+    <Content Include="Wypoz\templates\cars_take_success.html" />
+    <Content Include="Wypoz\templates\cars_take_view.html" />
+    <Content Include="Wypoz\templates\cars_view.html" />
     <Content Include="Wypoz\templates\index.html" />
+    <Content Include="Wypoz\templates\invalid.html" />
     <Content Include="Wypoz\templates\login.html" />
+    <Content Include="Wypoz\templates\main_page.html" />
+    <Content Include="Wypoz\templates\register.html" />
+    <Content Include="Wypoz\templates\register_success.html" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Python Tools\Microsoft.PythonTools.Django.targets" />
   <ProjectExtensions>

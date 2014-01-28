@@ -48,15 +48,15 @@ def cars_reserve(request):  #sprawdzac czy juz nie wypozyczylismy samochodu
             num_dowodu = cur_user.num_dow
             sel_car.num_dow = num_dowodu
         except ObjectDoesNotExist:
-            print "nie ma klienta"
+            print("nie ma klienta")
         try:
             cur_user = Firma.objects.get(login=req_user)
             num_dowodu = cur_user.num_dow_p
             sel_car.num_dow = num_dowodu
         except ObjectDoesNotExist:
-            print "nie ma firmy"
+            print("nie ma firmy")
         if Auto.objects.filter(num_dow=num_dowodu).count() > 0:
-            print Auto.objects.filter(num_dow=num_dowodu).count()
+            print(Auto.objects.filter(num_dow=num_dowodu).count())
             return HttpResponseRedirect('/cars_reserve_fail')
         sel_car.save()
         return HttpResponseRedirect('/cars_reserve_success')
@@ -85,18 +85,18 @@ def cars_give_back(request):
         cur_user = Klient.objects.get(login=req_user)
         num_dowodu = cur_user.num_dow
     except ObjectDoesNotExist:
-        print "nie ma w kl"
+        print("nie ma w kl")
     try:
         cur_user = Firma.objects.get(login=req_user)
         num_dowodu = cur_user.num_dow_p
     except ObjectDoesNotExist:
-        print "nie ma w fir"
+        print("nie ma w fir")
     try:
         cur_user = Pracownik.objects.get(login=req_user)
         return HttpResponseRedirect('/cars_take_view')
     except ObjectDoesNotExist:
-        print "nie ma w prac"
-    if Auto.objects.filter(num_dow=num_dowodu).count > 0:
+        print("nie ma w prac")
+    if Auto.objects.filter(num_dow=num_dowodu).count() > 0:
         try: 
             car = Auto.objects.get(num_dow=num_dowodu)
             car.do_odd = "True"
@@ -138,7 +138,7 @@ def cars_take_protocol(request):  #sprawdzac czy juz nie wypozyczylismy samochod
                 samochodq.do_odd = False
                 samochodq.save()
             except ObjectDoesNotExist:
-                print "to nie auto"
+                print("to nie auto")
             numdow = request.POST.get('client','')
             datep = datetime.now()
             opisp = request.POST.get('desc','')
@@ -149,13 +149,13 @@ def cars_take_protocol(request):  #sprawdzac czy juz nie wypozyczylismy samochod
                 loginp = cli.login
                 protocol = Protokol(samochod = samochodq, klient = cli,data=datep,opis=opisp,wycena=samochod_final_cena)
             except ObjectDoesNotExist:
-                print "to nie klient"
+                print("to nie klient")
             try:
                 cli = Firma.objects.get(num_dow_p=numdow)
                 loginp = cli.login
                 protocol = Protokol(samochod = samochodp, firma=cli,data=datep,opis=opisp,wycena=samochod_final_cena)
             except ObjectDoesNotExist:
-                print "to nie firma"
+                print("to nie firma")
             protocol.save()
             return HttpResponseRedirect('/cars_take_success')
 
