@@ -1,4 +1,4 @@
-Wypozyczalnia
+wypozyczalnia
 =============
 
 napwr.
